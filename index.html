@@ -22,13 +22,15 @@
       min-height: 100vh;
       transition: background 0.3s, color 0.3s;
     }
+    /* التطبيق متجاوب مع كافة الشاشات */
     .app-container {
-      width: 350px;
+      width: 90%;
+      max-width: 350px;
       background: #2e3033;
       border-radius: 20px;
       box-shadow: 0 10px 20px rgba(0,0,0,0.5);
       overflow: hidden;
-      margin: 10px;
+      margin: 10px auto;
       transition: background 0.3s, box-shadow 0.3s;
     }
     /* ========= قسم الآلة الحاسبة ========= */
@@ -99,7 +101,7 @@
       position: relative;
       transition: background 0.3s, color 0.3s;
     }
-    /* زر تبديل الوضع (Dark Mode) يظهر في أعلى قسم اليوميات */
+    /* زر تبديل الوضع (Dark Mode) في اليوميات */
     #diaryModeToggle {
       display: block;
       margin: 0 auto 20px auto;
@@ -110,7 +112,7 @@
       cursor: pointer;
       color: inherit;
     }
-    /* زر العودة في صفحة إدخال اليوميات للعودة إلى الآلة الحاسبة */
+    /* زر العودة من صفحة إدخال اليوميات إلى الآلة الحاسبة */
     #diaryInputForm .back-to-calculator {
       display: block;
       margin-bottom: 10px;
@@ -168,22 +170,21 @@
       background-color: #0073a5;
       transform: scale(1.05);
     }
-    /* ========= صفحة عرض اليوميات ========= */
+    /* ========= صفحة عرض اليوميات (بدون الإطار) ========= */
     .diary-grid-view {
       display: none;
-      background: #fafafa;
-      color: #333;
+      background: transparent; /* إزالة الخلفية المميزة */
+      color: inherit;
       padding: 20px;
-      border-radius: 15px;
+      border-radius: 0;  /* إزالة تقوس الزوايا */
       width: 100%;
-      max-width: 800px;
-      margin: 20px auto 0 auto;
+      max-width: 100%;
+      margin: 0;
       min-height: 400px;
       overflow-x: hidden;
       position: relative;
       transition: background 0.3s, color 0.3s;
     }
-    /* زر العودة في صفحة عرض اليوميات (على شكل سهم بدون مربع) */
     .diary-grid-view .back-to-input {
       position: absolute;
       top: 10px;
@@ -302,7 +303,6 @@
       white-space: normal;
       word-wrap: break-word;
     }
-    /* زر حذف تفاصيل اليومية */
     .modal .small-delete-btn {
       width: auto !important;
       padding: 2px 4px !important;
@@ -373,17 +373,17 @@
       z-index: 3000;
       animation: fadeIn 0.5s ease-out;
     }
-    /* تقليل حجم أزرار الأوفَر */
     #imageOptions button {
-      margin: 3px;
-      padding: 8px 16px;
-      font-size: 0.9rem;
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 1rem;
       border: none;
       border-radius: 8px;
       background: linear-gradient(45deg, #ff9800, #f44336);
       color: #fff;
       cursor: pointer;
       transition: transform 0.3s, background 0.3s;
+      width: 80%;
     }
     #imageOptions button:hover {
       transform: scale(1.05);
@@ -440,7 +440,6 @@
     #passwordOptionButtons button:hover {
       background: #5563de;
     }
-    /* تحديد مسافة 0.5 سم بين مدخلات تغيير كلمة السر */
     #changePasswordFields input {
       margin-bottom: 0.5cm;
     }
@@ -492,7 +491,6 @@
       z-index: 3000;
       text-align: center;
     }
-
     /* ========== تنسيق الوضع الليلي على كافة أجزاء واجهة اليوميات والنوافذ التابعة لها ========== */
     .diary-dark-mode .app-container,
     .diary-dark-mode .diary-container {
@@ -518,36 +516,31 @@
       color: #0f0 !important;
     }
     .diary-dark-mode .diary-grid-view {
-      background: #111 !important;
-      color: #0f0 !important;
-      border: 1px solid #0f0 !important;
+      background: transparent !important;
+      color: inherit !important;
+      border: none !important;
     }
     .modal.diary-dark-mode .modal-content {
       background: #111 !important;
       color: #0f0 !important;
       border: 1px solid #0f0 !important;
     }
-    /* إزالة الإطار حول زر العودة في الوضع الليلي */
     .diary-dark-mode .back-to-input {
       background: none !important;
       border: none !important;
       box-shadow: none !important;
     }
-    /* تغيير لون أيقونة الحذف في الوضع الليلي لتصبح بيضاء */
     .diary-dark-mode .small-delete-btn img {
       filter: invert(1);
     }
-    /* تعديل ألوان أزرار معلومات الحساب في الوضع الليلي */
     .diary-dark-mode .account-info button {
       background: #004d00 !important;
       color: #0f0 !important;
     }
     /* ========= التباعد المطلوب ========= */
-    /* تقليل المسافة بين عنوان "إدارة الحساب" وزر "إنشاء حساب" إلى 0.5 سم */
     #accountActionsModal .modal-content h2 {
       margin-bottom: 0.5cm;
     }
-    /* إضافة نفس المسافة في نافذة تأكيد الحذف */
     #deletePasswordModal .modal-content p {
       margin-bottom: 0.5cm;
     }
@@ -593,9 +586,9 @@
 
   <!-- قسم اليوميات -->
   <div class="app-container diary-container">
-    <!-- زر تبديل الوضع (يظهر في كافة صفحات اليوميات) -->
+    <!-- زر تبديل الوضع (Dark Mode) -->
     <button id="diaryModeToggle" onclick="toggleDiaryMode()">🌙</button>
-    <!-- زر العودة للآلة الحاسبة في صفحة إدخال اليوميات -->
+    <!-- صفحة إدخال اليوميات -->
     <div id="diaryInputForm" style="position: relative;">
       <button class="back-to-calculator" onclick="goBack()">←</button>
       <h2>اليوميات</h2>
@@ -604,21 +597,19 @@
       <div class="diary-buttons">
         <button class="save" onclick="saveDiary();">حفظ</button>
         <button class="view" onclick="showDiaryGridView()">مشاهدة اليوميات</button>
-        <!-- زر العودة في هذا القسم أصبح موجودًا بالفعل -->
         <button class="account" onclick="openAccountPanel()">حساب</button>
       </div>
     </div>
 
-    <!-- صفحة عرض اليوميات -->
+    <!-- صفحة عرض اليوميات (بدون إطار) -->
     <div id="diaryGridView" class="diary-grid-view">
-      <!-- زر العودة (على شكل سهم) في أعلى الجهة اليسرى -->
       <button onclick="backToDiaryInput()" class="back-to-input">←</button>
       <div class="search-bar">
         <input type="text" id="diarySearchInput" placeholder="ابحث في اليوميات" oninput="searchDiary()">
         <button onclick="searchDiary()">بحث</button>
       </div>
       <div id="diaryGrid" class="diary-grid">
-        <!-- سيتم تعبئة بطاقات اليوميات ديناميكياً -->
+        <!-- بطاقات اليوميات ستظهر هنا -->
       </div>
     </div>
   </div>
@@ -628,7 +619,6 @@
   <div id="diaryModal" class="modal">
     <div class="modal-content">
       <div class="header">
-        <!-- زر حذف تفاصيل اليومية -->
         <button onclick="deleteDiaryEntry()" class="small-delete-btn">
           <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="حذف">
         </button>
@@ -691,7 +681,7 @@
       <input type="email" id="loginEmail" placeholder="البريد الإلكتروني">
       <input type="password" id="loginPassword" placeholder="كلمة المرور" oninput="this.value=this.value.replace(/[^\d]/g,'')">
       <button onclick="login();">تسجيل الدخول</button>
-      <button onclick="openForgotPasswordModal()" style="background: #ff5722;">نسيت كلمة السر؟</button>
+      <button onclick="showMessage('هذا الخيار لا يعمل حاليا', 2000)" style="background: #ff5722;">نسيت كلمة السر؟</button>
     </div>
   </div>
 
@@ -702,7 +692,6 @@
       <div class="account-profile">
         <img id="accountProfileImage" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="صورة الحساب" onclick="toggleImageOptions()">
       </div>
-      <!-- عند الضغط على الصورة، ستظهر نافذة الأوفَر الخاصة بخيارات الصورة -->
       <div id="imageOptions">
         <button onclick="triggerChangeImage()">تغيير الصورة</button>
         <button onclick="deleteProfileImage()">حذف الصورة</button>
@@ -763,6 +752,13 @@
   <div id="messageBox"></div>
 
   <script>
+    /**************** إزالة أي حساب مسجل ****************/
+    (function() {
+      localStorage.removeItem('accounts');
+      localStorage.removeItem('currentAccount');
+      console.log("تم إزالة كافة بيانات الحساب المسجل");
+    })();
+
     /**************** وظائف الآلة الحاسبة ****************/
     let currentInput = "";
     const display = document.getElementById('display');
@@ -784,11 +780,7 @@
       display.value = currentInput;
     }
     function toggleSign() {
-      if (currentInput.startsWith("-")) {
-        currentInput = currentInput.slice(1);
-      } else {
-        currentInput = "-" + currentInput;
-      }
+      currentInput = currentInput.startsWith("-") ? currentInput.slice(1) : "-" + currentInput;
       display.value = currentInput;
     }
     function applyPercentage() {
@@ -805,7 +797,6 @@
       if (currentAccount && currentAccount.calcPassword) {
         calcPass = currentAccount.calcPassword;
       }
-      // إذا كان الإدخال يطابق كلمة سر الآلة الحاسبة ننتقل إلى واجهة اليوميات
       if (currentInput === calcPass) {
         document.querySelector('.calculator-container').style.display = 'none';
         document.querySelector('.diary-container').style.display = 'block';
@@ -939,16 +930,10 @@
         reader.readAsDataURL(file);
       }
     }
-    // عند الضغط على الصورة، نقوم بعرض نافذة الأوفَر الخاصة بخيارات الصورة
     function toggleImageOptions() {
       var options = document.getElementById('imageOptions');
-      if (options.style.display === "flex") {
-        options.style.display = "none";
-      } else {
-        options.style.display = "flex";
-      }
+      options.style.display = options.style.display === "flex" ? "none" : "flex";
     }
-    // عند الضغط على زر تغيير الصورة داخل الأوفَر
     function triggerChangeImage() {
       document.getElementById('accountImageInput').click();
       document.getElementById('imageOptions').style.display = "none";
@@ -966,7 +951,6 @@
       }
       document.getElementById('imageOptions').style.display = "none";
     }
-    // إغلاق نافذة الأوفَر عند الضغط خارج الأزرار
     document.getElementById('imageOptions').addEventListener('click', function(e) {
       if (e.target === this) {
         this.style.display = "none";
@@ -1077,29 +1061,25 @@
     function closeDeleteConfirmModal() {
       document.getElementById('deleteConfirmModal').style.display = 'none';
     }
-    // إذا لم يكن المستخدم مسجلاً، يتم حذف اليومية مباشرة دون طلب كلمة المرور
     function promptDeletePassword() {
       document.getElementById('deleteConfirmModal').style.display = 'none';
       let currentAccount = JSON.parse(localStorage.getItem('currentAccount'));
       if (!currentAccount) {
-           // حذف مباشرةً لعدم وجود حساب مسجل
-           diaryEntries.splice(currentDiaryIndex, 1);
-           localStorage.setItem('diaryEntries_global', JSON.stringify(diaryEntries));
-           closeDiaryModal();
-           renderDiaryGrid(diaryEntries);
-           showMessage("تم حذف اليومية", 2000);
+        diaryEntries.splice(currentDiaryIndex, 1);
+        localStorage.setItem('diaryEntries_global', JSON.stringify(diaryEntries));
+        closeDiaryModal();
+        renderDiaryGrid(diaryEntries);
+        showMessage("تم حذف اليومية", 2000);
       } else {
-           document.getElementById('deletePasswordModal').style.display = 'flex';
+        document.getElementById('deletePasswordModal').style.display = 'flex';
       }
     }
     function confirmDeleteWithPassword() {
       const password = document.getElementById('deletePasswordInput').value.trim();
       const currentAccount = JSON.parse(localStorage.getItem('currentAccount'));
-      if (currentAccount) {
-        if (password !== currentAccount.password) {
-          showMessage("كلمة السر غير صحيحة", 2000);
-          return;
-        }
+      if (currentAccount && password !== currentAccount.password) {
+        showMessage("كلمة السر غير صحيحة", 2000);
+        return;
       }
       diaryEntries.splice(currentDiaryIndex, 1);
       if (currentAccount) {
@@ -1165,11 +1145,9 @@
     function selectPasswordOption(option) {
       selectedPasswordOption = option;
       document.getElementById('changePasswordFields').style.display = 'block';
-      if (option === 'account') {
-        document.getElementById('oldPasswordInput').placeholder = "أدخل كلمة السر الحالية (حساب)";
-      } else if (option === 'calc') {
-        document.getElementById('oldPasswordInput').placeholder = "أدخل كلمة السر الحالية (آلة حاسبة)";
-      }
+      document.getElementById('oldPasswordInput').placeholder = option === 'account'
+        ? "أدخل كلمة السر الحالية (حساب)"
+        : "أدخل كلمة السر الحالية (آلة حاسبة)";
     }
     function submitChangePassword() {
       let oldPass = document.getElementById('oldPasswordInput').value.trim();
@@ -1220,38 +1198,13 @@
 
     /**************** وظائف زر "نسيت كلمة السر" ****************/
     function openForgotPasswordModal() {
-      document.getElementById('forgotPasswordModal').style.display = 'flex';
+      showMessage("هذا الخيار لا يعمل حاليا", 2000);
     }
     function closeForgotPasswordModal() {
       document.getElementById('forgotPasswordModal').style.display = 'none';
     }
     function sendForgotPasswordCode() {
-      const email = document.getElementById('forgotEmail').value.trim();
-      if (email === "") {
-        showMessage("الرجاء إدخال البريد الإلكتروني", 2000);
-        return;
-      }
-      let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
-      const account = accounts.find(acc => acc.email === email);
-      if (!account) {
-        showMessage("الحساب غير موجود", 2000);
-        return;
-      }
-      function generateCode() {
-        return Math.floor(100000 + Math.random() * 900000).toString();
-      }
-      let newCode = generateCode();
-      let forgotCodes = JSON.parse(localStorage.getItem('forgotCodes')) || {};
-      const today = new Date().toLocaleDateString();
-      if (forgotCodes[email] && forgotCodes[email].date === today) {
-        while (newCode === forgotCodes[email].code) {
-          newCode = generateCode();
-        }
-      }
-      forgotCodes[email] = { date: today, code: newCode };
-      localStorage.setItem('forgotCodes', JSON.stringify(forgotCodes));
-      showMessage("تم إرسال الكود إلى بريدك الإلكتروني", 2000);
-      closeForgotPasswordModal();
+      showMessage("هذا الخيار لا يعمل حاليا", 2000);
     }
 
     /**************** وظائف تأكيد تسجيل الخروج ****************/
@@ -1271,12 +1224,10 @@
       loadDiaryEntries();
     }
 
-    /**************** تبديل الوضع على كافة أجزاء واجهة اليوميات والنوافذ التابعة لها ****************/
+    /**************** تبديل الوضع الليلي ****************/
     function toggleDiaryMode() {
-      // تبديل فئة الوضع الليلي على القسم الرئيسي
       var diaryContainer = document.querySelector('.diary-container');
       diaryContainer.classList.toggle("diary-dark-mode");
-      // تبديل فئة الوضع الليلي على كافة النوافذ المنبثقة الخاصة بواجهة اليوميات
       var modalIds = ["diaryModal", "accountActionsModal", "accountCreationModal", "loginModal", "accountInfoModal", "changePasswordModal", "forgotPasswordModal", "logoutConfirmModal", "deleteConfirmModal", "deletePasswordModal"];
       modalIds.forEach(function(id) {
         var modal = document.getElementById(id);
@@ -1285,11 +1236,7 @@
         }
       });
       var btn = document.getElementById("diaryModeToggle");
-      if(diaryContainer.classList.contains("diary-dark-mode")){
-        btn.innerText = "☀️";
-      } else {
-        btn.innerText = "🌙";
-      }
+      btn.innerText = diaryContainer.classList.contains("diary-dark-mode") ? "☀️" : "🌙";
     }
   </script>
 </body>
