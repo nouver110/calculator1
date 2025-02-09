@@ -373,18 +373,17 @@
       z-index: 3000;
       animation: fadeIn 0.5s ease-out;
     }
-    /* تعديل حجم أزرار الأوفَر لتكون مثل باقي الأزرار */
+    /* تقليل حجم أزرار الأوفَر */
     #imageOptions button {
-      margin: 10px 0;
-      padding: 10px;
-      font-size: 1rem;
+      margin: 3px;
+      padding: 8px 16px;
+      font-size: 0.9rem;
       border: none;
       border-radius: 8px;
       background: linear-gradient(45deg, #ff9800, #f44336);
       color: #fff;
       cursor: pointer;
       transition: transform 0.3s, background 0.3s;
-      width: 80%;
     }
     #imageOptions button:hover {
       transform: scale(1.05);
@@ -692,8 +691,7 @@
       <input type="email" id="loginEmail" placeholder="البريد الإلكتروني">
       <input type="password" id="loginPassword" placeholder="كلمة المرور" oninput="this.value=this.value.replace(/[^\d]/g,'')">
       <button onclick="login();">تسجيل الدخول</button>
-      <!-- زر نسيت كلمة السر تم تعديله ليعرض رسالة -->
-      <button onclick="showMessage('هذا الخيار لا يعمل حاليا', 2000)" style="background: #ff5722;">نسيت كلمة السر؟</button>
+      <button onclick="openForgotPasswordModal()" style="background: #ff5722;">نسيت كلمة السر؟</button>
     </div>
   </div>
 
@@ -1222,15 +1220,38 @@
 
     /**************** وظائف زر "نسيت كلمة السر" ****************/
     function openForgotPasswordModal() {
-      // عرض رسالة تفيد بأن هذا الخيار غير متاح حالياً
-      showMessage("هذا الخيار لا يعمل حاليا", 2000);
+      document.getElementById('forgotPasswordModal').style.display = 'flex';
     }
     function closeForgotPasswordModal() {
       document.getElementById('forgotPasswordModal').style.display = 'none';
     }
     function sendForgotPasswordCode() {
-      // لم يعد هذا الخيار مستخدماً
-      showMessage("هذا الخيار لا يعمل حاليا", 2000);
+      const email = document.getElementById('forgotEmail').value.trim();
+      if (email === "") {
+        showMessage("الرجاء إدخال البريد الإلكتروني", 2000);
+        return;
+      }
+      let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+      const account = accounts.find(acc => acc.email === email);
+      if (!account) {
+        showMessage("الحساب غير موجود", 2000);
+        return;
+      }
+      function generateCode() {
+        return Math.floor(100000 + Math.random() * 900000).toString();
+      }
+      let newCode = generateCode();
+      let forgotCodes = JSON.parse(localStorage.getItem('forgotCodes')) || {};
+      const today = new Date().toLocaleDateString();
+      if (forgotCodes[email] && forgotCodes[email].date === today) {
+        while (newCode === forgotCodes[email].code) {
+          newCode = generateCode();
+        }
+      }
+      forgotCodes[email] = { date: today, code: newCode };
+      localStorage.setItem('forgotCodes', JSON.stringify(forgotCodes));
+      showMessage("تم إرسال الكود إلى بريدك الإلكتروني", 2000);
+      closeForgotPasswordModal();
     }
 
     /**************** وظائف تأكيد تسجيل الخروج ****************/
