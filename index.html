@@ -6,32 +6,32 @@
   <title>آلة حاسبة عصرية - اليوميات</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    /* الإعدادات العامة */
+    /* إعدادات عامة */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+    html, body {
+      width: 100vw;
+      height: 100vh;
+    }
     body {
       font-family: 'Cairo', sans-serif;
       background: #1d1f21;
       direction: rtl;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      transition: background 0.3s, color 0.3s;
+      /* إلغاء التنسيق المركزي لأن الحاوية ستملأ الشاشة */
     }
-    /* التطبيق متجاوب مع كافة الشاشات */
+    /* تعديل الحاوية الرئيسية لتملأ الشاشة بالكامل */
     .app-container {
-      width: 90%;
-      max-width: 350px;
+      width: 100vw;
+      height: 100vh;
       background: #2e3033;
-      border-radius: 20px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-      overflow: hidden;
-      margin: 10px auto;
-      transition: background 0.3s, box-shadow 0.3s;
+      border-radius: 0;    /* إزالة التقويس */
+      box-shadow: none;    /* إزالة الظل */
+      overflow: auto;
+      margin: 0;
+      transition: background 0.3s;
     }
     /* ========= قسم الآلة الحاسبة ========= */
     .calculator-container {
@@ -39,6 +39,9 @@
     }
     .calculator {
       background: #2e3033;
+      height: 100%; /* لضمان شغل كامل الارتفاع */
+      display: flex;
+      flex-direction: column;
     }
     .display {
       background: #000;
@@ -57,6 +60,7 @@
       grid-auto-rows: 70px;
       gap: 1px;
       background: #3a3d40;
+      flex-grow: 1;
     }
     .buttons button {
       border: none;
@@ -96,9 +100,9 @@
       display: none;
       padding: 20px;
       background: #2e3033;
-      border-radius: 20px;
       color: #fff;
       position: relative;
+      height: 100%;
       transition: background 0.3s, color 0.3s;
     }
     /* زر تبديل الوضع (Dark Mode) في اليوميات */
@@ -170,15 +174,14 @@
       background-color: #0073a5;
       transform: scale(1.05);
     }
-    /* ========= صفحة عرض اليوميات (بدون الإطار) ========= */
+    /* ========= صفحة عرض اليوميات (بدون إطار) ========= */
     .diary-grid-view {
       display: none;
-      background: transparent; /* إزالة الخلفية المميزة */
+      background: transparent;
       color: inherit;
       padding: 20px;
-      border-radius: 0;  /* إزالة تقوس الزوايا */
+      border-radius: 0;
       width: 100%;
-      max-width: 100%;
       margin: 0;
       min-height: 400px;
       overflow-x: hidden;
@@ -491,7 +494,7 @@
       z-index: 3000;
       text-align: center;
     }
-    /* ========== تنسيق الوضع الليلي على كافة أجزاء واجهة اليوميات والنوافذ التابعة لها ========== */
+    /* ========== تنسيق الوضع الليلي ========== */
     .diary-dark-mode .app-container,
     .diary-dark-mode .diary-container {
       background: #000 !important;
@@ -537,7 +540,7 @@
       background: #004d00 !important;
       color: #0f0 !important;
     }
-    /* ========= التباعد المطلوب ========= */
+    /* ========= التباعد ========= */
     #accountActionsModal .modal-content h2 {
       margin-bottom: 0.5cm;
     }
@@ -911,7 +914,7 @@
     function updateAccountInfoModal() {
       let currentAccount = JSON.parse(localStorage.getItem('currentAccount'));
       if (currentAccount) {
-        document.getElementById('accountNameInput').value = (currentAccount.name === currentAccount.email) ? "" : currentAccount.name;
+        document.getElementById('accountNameInput').value = currentAccount.name === currentAccount.email ? "" : currentAccount.name;
         document.getElementById('accountProfileImage').src = (currentAccount.image && currentAccount.image.trim() !== "") 
           ? currentAccount.image 
           : "https://cdn-icons-png.flaticon.com/512/847/847969.png";
