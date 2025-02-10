@@ -6,7 +6,7 @@
   <title>آلة حاسبة عصرية - اليوميات</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    /* إعدادات عامة */
+    /* إعدادات عامة لجميع العناصر */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -15,31 +15,37 @@
     html, body {
       width: 100vw;
       height: 100vh;
+      overflow: hidden; /* منع التمرير */
     }
     body {
       font-family: 'Cairo', sans-serif;
       background: #1d1f21;
       direction: rtl;
-      /* إلغاء التنسيق المركزي لأن الحاوية ستملأ الشاشة */
     }
-    /* تعديل الحاوية الرئيسية لتملأ الشاشة بالكامل */
+    /* الحاوية الرئيسية تثبت في الموقع وتمتد لكامل الشاشة */
     .app-container {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
       background: #2e3033;
-      border-radius: 0;    /* إزالة التقويس */
-      box-shadow: none;    /* إزالة الظل */
-      overflow: auto;
-      margin: 0;
-      transition: background 0.3s;
+      border-radius: 0;
+      box-shadow: none;
+      overflow: hidden;
     }
     /* ========= قسم الآلة الحاسبة ========= */
     .calculator-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       display: block;
     }
     .calculator {
       background: #2e3033;
-      height: 100%; /* لضمان شغل كامل الارتفاع */
+      height: 100%;
       display: flex;
       flex-direction: column;
     }
@@ -54,10 +60,11 @@
       outline: none;
       transition: background 0.3s, color 0.3s;
     }
+    /* شبكة الأزرار تمتد على كامل المساحة المتبقية (مقسمة إلى 5 صفوف متساوية) */
     .buttons {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      grid-auto-rows: 70px;
+      grid-template-rows: repeat(5, 1fr);
       gap: 1px;
       background: #3a3d40;
       flex-grow: 1;
@@ -97,26 +104,31 @@
     }
     /* ========= قسم اليوميات ========= */
     .diary-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       display: none;
       padding: 20px;
       background: #2e3033;
       color: #fff;
-      position: relative;
-      height: 100%;
       transition: background 0.3s, color 0.3s;
+      /* اعتماد تخطيط مرن ليملأ كامل الشاشة */
+      display: flex;
+      flex-direction: column;
     }
-    /* زر تبديل الوضع (Dark Mode) في اليوميات */
+    /* زر تبديل الوضع (Dark Mode) */
     #diaryModeToggle {
       display: block;
       margin: 0 auto 20px auto;
       font-size: 1.8rem;
       background: none;
       border: none;
-      outline: none;
       cursor: pointer;
       color: inherit;
     }
-    /* زر العودة من صفحة إدخال اليوميات إلى الآلة الحاسبة */
+    /* زر العودة من صفحة اليوميات إلى الآلة الحاسبة */
     #diaryInputForm .back-to-calculator {
       display: block;
       margin-bottom: 10px;
@@ -128,11 +140,15 @@
       text-align: left;
       width: 100%;
     }
-    /* نموذج إدخال اليوميات */
+    /* نموذج إدخال اليوميات يمتد لملء المساحة العمودية */
     #diaryInputForm {
       margin-top: 20px;
       position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
+    /* العنوان والنصوص بتنسيق بسيط */
     #diaryInputForm h2 {
       text-align: center;
       margin-bottom: 15px;
@@ -147,17 +163,20 @@
       font-size: 1rem;
       transition: background 0.3s, color 0.3s;
     }
+    /* إزالة الارتفاع الثابت وتوسيع مساحة النص لتملأ الفراغ */
     #diaryInputForm textarea {
-      height: 150px;
+      height: auto;
+      flex: 1;
       resize: none;
     }
-    .diary-buttons {
+    /* لضمان بقاء أزرار التحكم في أسفل الشاشة */
+    #diaryInputForm .diary-buttons {
+      margin-top: auto;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      margin-bottom: 10px;
     }
-    .diary-buttons button {
+    #diaryInputForm .diary-buttons button {
       flex: 1;
       margin: 5px;
       padding: 12px 10px;
@@ -170,11 +189,11 @@
       background-color: #008cba;
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
-    .diary-buttons button:hover {
+    #diaryInputForm .diary-buttons button:hover {
       background-color: #0073a5;
       transform: scale(1.05);
     }
-    /* ========= صفحة عرض اليوميات (بدون إطار) ========= */
+    /* صفحة عرض اليوميات (بطاقات اليوميات) */
     .diary-grid-view {
       display: none;
       background: transparent;
@@ -187,6 +206,7 @@
       overflow-x: hidden;
       position: relative;
       transition: background 0.3s, color 0.3s;
+      flex: 1;
     }
     .diary-grid-view .back-to-input {
       position: absolute;
@@ -254,14 +274,12 @@
       color: #888;
       margin-bottom: 8px;
       text-align: right;
-      white-space: normal;
       word-wrap: break-word;
     }
     .diary-card .diary-title {
       font-size: 1.2rem;
       font-weight: bold;
       text-align: center;
-      white-space: normal;
       word-wrap: break-word;
     }
     /* ========= النوافذ المنبثقة ========= */
@@ -303,7 +321,6 @@
     }
     #diaryModal .modal-content h2,
     #diaryModal .modal-content p {
-      white-space: normal;
       word-wrap: break-word;
     }
     .modal .small-delete-btn {
@@ -315,7 +332,6 @@
       background: none;
       border: none;
       cursor: pointer;
-      display: inline-block;
       transition: transform 0.2s;
     }
     .modal .small-delete-btn img {
@@ -327,7 +343,7 @@
     .modal .small-delete-btn:hover {
       transform: scale(1.1);
     }
-    /* ========= تنسيق النوافذ المنبثقة الأخرى ========= */
+    /* ========= باقي تنسيقات النوافذ ========= */
     .modal input, 
     .modal button {
       width: 100%;
@@ -357,18 +373,17 @@
       height: 100px;
       border-radius: 50%;
       object-fit: cover;
-      display: block;
       margin: 0 auto;
       border: 2px solid #555;
     }
-    /* نافذة الأوفَر الخاصة بخيارات الصورة */
+    /* نافذة خيارات الصورة (الأوفَر) */
     #imageOptions {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0,0,0,0.7);
       display: none;
       flex-direction: column;
       align-items: center;
@@ -494,7 +509,7 @@
       z-index: 3000;
       text-align: center;
     }
-    /* ========== تنسيق الوضع الليلي ========== */
+    /* ========== الوضع الليلي ========= */
     .diary-dark-mode .app-container,
     .diary-dark-mode .diary-container {
       background: #000 !important;
@@ -552,6 +567,19 @@
       from { opacity: 0; transform: scale(0.8); }
       to { opacity: 1; transform: scale(1); }
     }
+    /* ======= مثال لاستجابة أفضل على الشاشات الصغيرة ======= */
+    @media (max-width: 600px) {
+      .display {
+        font-size: 1.5rem;
+        padding: 15px;
+      }
+      .buttons button {
+        font-size: 1.2rem;
+      }
+      #diaryModeToggle {
+        font-size: 1.5rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -580,7 +608,7 @@
         <button onclick="appendDigit('2')" class="btn">2</button>
         <button onclick="appendDigit('3')" class="btn">3</button>
         <button onclick="appendOperator('+')" class="btn operator">+</button>
-        <!-- الصف الخامس -->
+        <!-- الصف الخامس: الزر "0" يمتد على عمودين والزر "=" على العمودين المتبقيين -->
         <button onclick="appendDigit('0')" class="btn zero">0</button>
         <button onclick="calculateResult()" class="btn equals">=</button>
       </div>
@@ -592,7 +620,7 @@
     <!-- زر تبديل الوضع (Dark Mode) -->
     <button id="diaryModeToggle" onclick="toggleDiaryMode()">🌙</button>
     <!-- صفحة إدخال اليوميات -->
-    <div id="diaryInputForm" style="position: relative;">
+    <div id="diaryInputForm">
       <button class="back-to-calculator" onclick="goBack()">←</button>
       <h2>اليوميات</h2>
       <input type="text" id="diaryTitle" placeholder="عنوان اليومية">
@@ -603,8 +631,7 @@
         <button class="account" onclick="openAccountPanel()">حساب</button>
       </div>
     </div>
-
-    <!-- صفحة عرض اليوميات (بدون إطار) -->
+    <!-- صفحة عرض اليوميات (بطاقات اليوميات) -->
     <div id="diaryGridView" class="diary-grid-view">
       <button onclick="backToDiaryInput()" class="back-to-input">←</button>
       <div class="search-bar">
@@ -612,7 +639,7 @@
         <button onclick="searchDiary()">بحث</button>
       </div>
       <div id="diaryGrid" class="diary-grid">
-        <!-- بطاقات اليوميات ستظهر هنا -->
+        <!-- ستظهر بطاقات اليوميات هنا -->
       </div>
     </div>
   </div>
@@ -631,7 +658,6 @@
       <p id="modalText"></p>
     </div>
   </div>
-
   <!-- مودال تأكيد حذف اليومية -->
   <div id="deleteConfirmModal" class="modal">
     <div class="modal-content">
@@ -641,7 +667,6 @@
       <button onclick="promptDeletePassword()">نعم</button>
     </div>
   </div>
-
   <!-- مودال إدخال كلمة السر لتأكيد حذف اليومية -->
   <div id="deletePasswordModal" class="modal">
     <div class="modal-content">
@@ -652,7 +677,6 @@
       <button onclick="confirmDeleteWithPassword()">تأكيد</button>
     </div>
   </div>
-
   <!-- مودال إدارة الحساب -->
   <div id="accountActionsModal" class="modal">
     <div class="modal-content">
@@ -662,7 +686,6 @@
       <button onclick="openLoginModal()">تسجيل الدخول</button>
     </div>
   </div>
-
   <!-- مودال إنشاء الحساب -->
   <div id="accountCreationModal" class="modal">
     <div class="modal-content">
@@ -674,7 +697,6 @@
       <button onclick="createAccount();">إنشاء الحساب</button>
     </div>
   </div>
-
   <!-- مودال تسجيل الدخول -->
   <div id="loginModal" class="modal">
     <div class="modal-content">
@@ -687,7 +709,6 @@
       <button onclick="showMessage('هذا الخيار لا يعمل حاليا', 2000)" style="background: #ff5722;">نسيت كلمة السر؟</button>
     </div>
   </div>
-
   <!-- مودال معلومات الحساب -->
   <div id="accountInfoModal" class="modal">
     <div class="modal-content account-info">
@@ -711,7 +732,6 @@
       <input type="file" id="accountImageInput" accept="image/*" onchange="changeProfileImage(event)">
     </div>
   </div>
-
   <!-- مودال تغيير كلمة السر -->
   <div id="changePasswordModal" class="modal">
     <div class="modal-content">
@@ -729,7 +749,6 @@
       </div>
     </div>
   </div>
-
   <!-- مودال "نسيت كلمة السر" -->
   <div id="forgotPasswordModal" class="modal">
     <div class="modal-content">
@@ -740,7 +759,6 @@
       <button onclick="sendForgotPasswordCode();">إرسال الكود</button>
     </div>
   </div>
-
   <!-- مودال تأكيد تسجيل الخروج -->
   <div id="logoutConfirmModal" class="modal">
     <div class="modal-content">
@@ -750,10 +768,8 @@
       <button onclick="closeLogoutConfirmModal()">إلغاء</button>
     </div>
   </div>
-
   <!-- صندوق الرسائل -->
   <div id="messageBox"></div>
-
   <script>
     /**************** إزالة أي حساب مسجل ****************/
     (function() {
@@ -833,7 +849,7 @@
     }
     function updateAccountInfoModalFromTemp() {
       document.getElementById('accountNameInput').value = tempAccount.name;
-      document.getElementById('accountProfileImage').src = (tempAccount.image && tempAccount.image.trim() !== "") 
+      document.getElementById('accountProfileImage').src = (tempAccount.image && tempAccount.image.trim() !== "")
         ? tempAccount.image 
         : "https://cdn-icons-png.flaticon.com/512/847/847969.png";
     }
@@ -915,7 +931,7 @@
       let currentAccount = JSON.parse(localStorage.getItem('currentAccount'));
       if (currentAccount) {
         document.getElementById('accountNameInput').value = currentAccount.name === currentAccount.email ? "" : currentAccount.name;
-        document.getElementById('accountProfileImage').src = (currentAccount.image && currentAccount.image.trim() !== "") 
+        document.getElementById('accountProfileImage').src = (currentAccount.image && currentAccount.image.trim() !== "")
           ? currentAccount.image 
           : "https://cdn-icons-png.flaticon.com/512/847/847969.png";
       }
@@ -1023,7 +1039,7 @@
     }
     function backToDiaryInput() {
       document.getElementById('diaryGridView').style.display = 'none';
-      document.getElementById('diaryInputForm').style.display = 'block';
+      document.getElementById('diaryInputForm').style.display = 'flex';
     }
     function goBack() {
       document.querySelector('.diary-container').style.display = 'none';
