@@ -41,10 +41,11 @@
       display: flex;
       flex-direction: column;
     }
+    /* تكبير خانة العرض في الآلة الحاسبة */
     .display {
       background: #000;
       color: #0f0;
-      font-size: 2rem;
+      font-size: 2.5rem;
       text-align: right;
       padding: 20px;
       width: 100%;
@@ -71,9 +72,18 @@
     .buttons button:hover {
       background: #5a5d60;
     }
-    .buttons button:active {
+    /* تأثير الضغط يبقى على أزرار الآلة الحاسبة فقط */
+    .calculator .buttons button:active {
       transform: scale(0.95);
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    /* إزالة تأثير الضغط على باقي الأزرار */
+    .diary-container button:active,
+    .modal button:active,
+    .account-info button:active,
+    #diaryInputForm .diary-buttons button:active {
+       transform: none;
+       box-shadow: none;
     }
     .btn.operator { background: #5563de; }
     .btn.operator:hover { background: #4958c9; }
@@ -188,26 +198,28 @@
       transition: background 0.3s, color 0.3s;
       position: relative;
     }
-    /* زر العودة - في أعلى الصفحة، رفعه قليلاً */
+    /* زر العودة (السهم) في أعلى الصفحة: رفعه قليلاً */
     .back-to-input {
       position: absolute;
-      top: 5px;  /* رفع الزر للأعلى */
+      top: 5px;
       left: 20px;
-      background: none;
-      border: none;
       font-size: 1.8rem;
+      font-weight: bold;
       cursor: pointer;
       padding: 0;
       margin: 0;
+      /* اللون الافتراضي (في الوضع النهاري) */
+      color: black;
     }
-    .back-to-input:hover {
-      background: none;
+    /* في الوضع الليلي يكون لون السهم أبيض */
+    .diary-dark-mode .back-to-input {
+      color: white;
     }
     /* لضمان وجود فجوة 1 سم بين زر السهم وخانة البحث */
     .search-bar {
       display: flex;
       align-items: center;
-      margin: 1cm 0 20px 0; /* 1 سم من الأعلى */
+      margin: 1cm 0 20px 0;
       gap: 10px;
     }
     .search-bar input {
@@ -222,22 +234,7 @@
     .search-bar input:focus {
       border-color: #008cba;
     }
-    #searchButton {
-      padding: 12px;
-      background: #008cba;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    #searchButton:hover {
-      background: #0073a5;
-    }
-    #searchButton img {
-      width: 24px;
-      height: 24px;
-      filter: invert(1);
-    }
+    /* تمت إزالة أيقونة البحث؛ لا يوجد زر هنا */
     /* تصميم بطاقة اليومية: التاريخ والوقت في الأعلى، خط فاصل، ثم العنوان في الأسفل */
     .diary-card {
       background: #fff;
@@ -581,12 +578,9 @@
     <div id="diaryGridView" class="diary-grid-view">
       <!-- زر العودة في أعلى الصفحة -->
       <button onclick="backToDiaryInput()" class="back-to-input">←</button>
-      <!-- خانة البحث مع زر البحث -->
+      <!-- خانة البحث بدون أي أيقونة -->
       <div class="search-bar">
         <input type="text" id="diarySearchInput" placeholder="ابحث في اليوميات" oninput="searchDiary()">
-        <button id="searchButton">
-          <img src="https://cdn-icons-png.flaticon.com/512/49/49116.png" alt="بحث">
-        </button>
       </div>
       <div id="diaryGrid" class="diary-grid">
         <!-- ستظهر بطاقات اليوميات هنا -->
@@ -636,7 +630,7 @@
       <span class="close" onclick="closeAccountCreationModal()">&times;</span>
       <h2>إنشاء الحساب</h2>
       <p>يرجى إدخال بريدك الإلكتروني وكلمة المرور (الحد الأدنى 8 أرقام):</p>
-      <input type="email" id="accountEmail" placeholder="البريد الإلكتروني">
+      <input type="email" id="accountEmail" placeholder="البريد الإلكتروني (بأحرف صغيرة)">
       <input type="password" id="accountPassword" placeholder="كلمة المرور" oninput="this.value=this.value.replace(/[^\d]/g,'')">
       <button onclick="createAccount();">إنشاء الحساب</button>
     </div>
@@ -717,11 +711,8 @@
       return atob(text);
     }
 
-    (function() {
-      localStorage.removeItem('accounts');
-      localStorage.removeItem('currentAccount');
-      console.log("تم إزالة كافة بيانات الحساب المسجل");
-    })();
+    // تمت إزالة الدالة التي كانت تمسح بيانات الحساب تلقائيًا
+    // يبقى المستخدم مسجلاً حتى يقوم بتسجيل الخروج بنفسه
 
     let currentInput = "";
     const display = document.getElementById('display');
@@ -805,7 +796,6 @@
         showMessage("يرجى إدخال بريد إلكتروني صالح", 2000);
         return;
       }
-      // التأكد من عدم احتواء البريد على أحرف كبيرة
       if (email !== email.toLowerCase()) {
         showMessage("يجب أن يحتوي البريد الإلكتروني على أحرف صغيرة فقط", 2000);
         return;
@@ -1184,9 +1174,6 @@
       logout();
       closeLogoutConfirmModal();
       showMessage("تم تسجيل الخروج", 2000);
-    }
-    if(document.querySelector('.diary-container').style.display === 'block'){
-      loadDiaryEntries();
     }
     function toggleDiaryMode() {
       var diaryContainer = document.querySelector('.diary-container');
