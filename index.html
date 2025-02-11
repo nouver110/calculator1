@@ -68,6 +68,8 @@
       background: #4e5052;
       color: #fff;
       transition: background 0.2s, transform 0.1s;
+      /* لضمان ظهور علامات العمليات من اليمين */
+      direction: ltr;
     }
     .buttons button:hover {
       background: #5a5d60;
@@ -109,6 +111,12 @@
       color: #fff;
       transition: background 0.3s, color 0.3s;
       flex-direction: column;
+      /* إخفاء شريط التمرير (للأجهزة التي تظهره على الجهة اليسرى) */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .diary-container::-webkit-scrollbar {
+      display: none;
     }
     #diaryModeToggle {
       display: block;
@@ -197,8 +205,13 @@
       overflow-y: auto;
       transition: background 0.3s, color 0.3s;
       position: relative;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
-    /* زر العودة (السهم) في أعلى الصفحة: رفعه قليلاً */
+    .diary-grid-view::-webkit-scrollbar {
+      display: none;
+    }
+    /* زر العودة (السهم) في أعلى الصفحة: إزالة الإطار والخلفية */
     .back-to-input {
       position: absolute;
       top: 5px;
@@ -208,12 +221,13 @@
       cursor: pointer;
       padding: 0;
       margin: 0;
-      /* اللون الافتراضي (في الوضع النهاري) */
-      color: black;
-    }
-    /* في الوضع الليلي يكون لون السهم أبيض */
-    .diary-dark-mode .back-to-input {
-      color: white;
+      background: none;
+      border: none;
+      outline: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      /* اللون ثابت أسود في جميع الأوضاع */
+      color: black !important;
     }
     /* لضمان وجود فجوة 1 سم بين زر السهم وخانة البحث */
     .search-bar {
@@ -234,7 +248,7 @@
     .search-bar input:focus {
       border-color: #008cba;
     }
-    /* تمت إزالة أيقونة البحث؛ لا يوجد زر هنا */
+    /* تمت إزالة أي أيقونة للبحث، تبقى خانة الإدخال فقط */
     /* تصميم بطاقة اليومية: التاريخ والوقت في الأعلى، خط فاصل، ثم العنوان في الأسفل */
     .diary-card {
       background: #fff;
@@ -359,6 +373,24 @@
       object-fit: cover;
       margin: 0 auto;
       border: 2px solid #555;
+    }
+    /* إزالة "الشريط" (ScrollBar أو أي حد جانبي) من صفحة الحساب واليوميات */
+    .account-info, .diary-container {
+      border-left: none;
+    }
+    /* إخفاء شريط التمرير (Scrollbar) في الحاويات */
+    .diary-container::-webkit-scrollbar,
+    .diary-grid-view::-webkit-scrollbar,
+    .account-info::-webkit-scrollbar {
+      display: none;
+    }
+    .diary-container {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .account-info {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
     #imageOptions {
       position: fixed;
@@ -493,8 +525,7 @@
       border: 1px solid #0f0;
     }
     .diary-dark-mode .diary-buttons button,
-    .diary-dark-mode .diary-card,
-    .diary-dark-mode .back-to-input {
+    .diary-dark-mode .diary-card {
       background: #111 !important;
       color: #0f0 !important;
       border: 1px solid #0f0 !important;
@@ -510,15 +541,9 @@
       color: #0f0 !important;
       border: 1px solid #0f0 !important;
     }
-    .diary-dark-mode .back-to-input {
-      background: none !important;
-      border: none !important;
-      box-shadow: none !important;
-    }
-    .diary-dark-mode .small-delete-btn img { filter: invert(1); }
-    .diary-dark-mode .account-info button {
-      background: #004d00 !important;
-      color: #0f0 !important;
+    /* التأكيد على بقاء لون سهم العودة أسود في جميع الأوضاع */
+    .back-to-input {
+      color: black !important;
     }
     /* أكواد إضافية */
     #accountActionsModal .modal-content h2 { margin-bottom: 0.5cm; }
@@ -711,8 +736,7 @@
       return atob(text);
     }
 
-    // تمت إزالة الدالة التي كانت تمسح بيانات الحساب تلقائيًا
-    // يبقى المستخدم مسجلاً حتى يقوم بتسجيل الخروج بنفسه
+    // لن يتم تسجيل الخروج تلقائيًا؛ يبقى المستخدم مسجلاً حتى يطلب تسجيل الخروج
 
     let currentInput = "";
     const display = document.getElementById('display');
