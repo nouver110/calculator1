@@ -66,10 +66,14 @@
       cursor: pointer;
       background: #4e5052;
       color: #fff;
-      transition: background 0.2s;
+      transition: background 0.2s, transform 0.1s;
     }
     .buttons button:hover {
       background: #5a5d60;
+    }
+    .buttons button:active {
+      transform: scale(0.95);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     }
     .btn.operator { background: #5563de; }
     .btn.operator:hover { background: #4958c9; }
@@ -122,13 +126,12 @@
       display: flex;
       flex-direction: column;
     }
-    /* تأكيد ظهور عنوان "اليوميات" بلون أبيض */
+    /* عنوان اليوميات */
     #diaryInputForm h2 {
       text-align: center;
       margin-bottom: 15px;
       color: #fff !important;
     }
-    /* لضمان ظهوره في الوضع الليلي أيضاً */
     .diary-dark-mode #diaryInputForm h2 {
       color: #fff !important;
     }
@@ -142,7 +145,7 @@
       font-size: 1rem;
       transition: background 0.3s, color 0.3s;
     }
-    /* تنسيق نصوص الـ placeholder */
+    /* تنسيق الـ placeholder */
     #diaryTitle::placeholder,
     #diaryText::placeholder {
       color: #ccc;
@@ -174,89 +177,100 @@
       background-color: #0073a5;
       transform: scale(1.05);
     }
+    /* ========= تصميم صفحة مشاهدة اليوميات ========= */
     .diary-grid-view {
       display: none;
-      background: transparent;
-      color: inherit;
+      flex-direction: column;
       padding: 20px;
-      border-radius: 0;
       width: 100%;
-      margin: 0;
       min-height: 400px;
-      overflow-x: hidden;
-      position: relative;
+      overflow-y: auto;
       transition: background 0.3s, color 0.3s;
-      flex: 1;
+      position: relative;
     }
-    .diary-grid-view .back-to-input {
+    /* زر العودة - في أعلى الصفحة، رفعه قليلاً */
+    .back-to-input {
       position: absolute;
-      top: 10px;
-      left: 10px;
+      top: 5px;  /* رفع الزر للأعلى */
+      left: 20px;
       background: none;
       border: none;
       font-size: 1.8rem;
-      color: inherit;
       cursor: pointer;
+      padding: 0;
+      margin: 0;
     }
-    /* تعديل خانة البحث: إزالة زر البحث، تكبير حجمها وإضافة أيقونة في نهايتها */
+    .back-to-input:hover {
+      background: none;
+    }
+    /* لضمان وجود فجوة 1 سم بين زر السهم وخانة البحث */
     .search-bar {
       display: flex;
       align-items: center;
-      margin: 50px 0 20px 0;
+      margin: 1cm 0 20px 0; /* 1 سم من الأعلى */
+      gap: 10px;
     }
     .search-bar input {
       flex: 1;
-      padding: 15px 50px 15px 15px;
-      font-size: 1.2rem;
+      padding: 12px;
+      font-size: 1.1rem;
       border: 2px solid #ccc;
       border-radius: 8px;
       outline: none;
-      transition: background 0.3s, color 0.3s;
-      /* إضافة أيقونة البحث كخلفية */
-      background: #fff url('https://cdn-icons-png.flaticon.com/512/49/49116.png') no-repeat right center;
-      background-size: 24px 24px;
+      transition: border-color 0.3s;
     }
-    .diary-dark-mode .search-bar input {
-      background: #111 url('https://cdn-icons-png.flaticon.com/512/49/49116.png') no-repeat right center;
-      background-size: 24px 24px;
-      border: 2px solid #0f0;
-      color: #0f0;
+    .search-bar input:focus {
+      border-color: #008cba;
     }
-    .diary-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
+    #searchButton {
+      padding: 12px;
+      background: #008cba;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
     }
+    #searchButton:hover {
+      background: #0073a5;
+    }
+    #searchButton img {
+      width: 24px;
+      height: 24px;
+      filter: invert(1);
+    }
+    /* تصميم بطاقة اليومية: التاريخ والوقت في الأعلى، خط فاصل، ثم العنوان في الأسفل */
     .diary-card {
       background: #fff;
-      border-radius: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
       padding: 15px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      margin: 15px 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       cursor: pointer;
       transition: transform 0.2s;
     }
     .diary-card:hover {
-      transform: scale(1.02);
+      transform: translateY(-3px);
     }
-    .diary-card .diary-date {
-      font-size: 0.8rem;
-      color: #888;
-      margin-bottom: 8px;
-      text-align: right;
-      word-wrap: break-word;
+    .diary-card .diary-datetime {
+      font-size: 0.9rem;
+      color: #777;
+      margin-bottom: 10px;
+    }
+    .diary-card hr {
+      border: 0;
+      height: 1px;
+      background: #ddd;
+      margin-bottom: 10px;
     }
     .diary-card .diary-title {
-      font-size: 1.2rem;
+      font-size: 1.5rem;
       font-weight: bold;
-      text-align: center;
-      word-wrap: break-word;
-      color: #000; /* تأكيد ظهور العنوان في الوضع النهاري */
+      color: #333;
     }
+    /* في الوضع الليلي يظهر عنوان اليومية باللون الأخضر */
     .diary-dark-mode .diary-card .diary-title {
-      color: #0f0;
+      color: #0f0 !important;
     }
     /* ========= النوافذ المنبثقة ========= */
     .modal {
@@ -482,15 +496,13 @@
       border: 1px solid #0f0;
     }
     .diary-dark-mode .diary-buttons button,
-    .diary-dark-mode .search-bar input,
-    .diary-dark-mode .search-bar button,
     .diary-dark-mode .diary-card,
     .diary-dark-mode .back-to-input {
       background: #111 !important;
       color: #0f0 !important;
       border: 1px solid #0f0 !important;
     }
-    .diary-dark-mode .diary-card .diary-date { color: #0f0 !important; }
+    .diary-dark-mode .diary-card .diary-datetime { color: #0f0 !important; }
     .diary-dark-mode .diary-grid-view {
       background: transparent !important;
       color: inherit !important;
@@ -511,6 +523,7 @@
       background: #004d00 !important;
       color: #0f0 !important;
     }
+    /* أكواد إضافية */
     #accountActionsModal .modal-content h2 { margin-bottom: 0.5cm; }
     #deletePasswordModal .modal-content p { margin-bottom: 0.5cm; }
     @keyframes fadeIn {
@@ -551,7 +564,7 @@
       </div>
     </div>
   </div>
-  <!-- اليوميات (يظهر قسمها فقط بعد إدخال كلمة السر الصحيحة) -->
+  <!-- اليوميات (تظهر بعد إدخال كلمة السر الصحيحة) -->
   <div class="app-container diary-container">
     <button id="diaryModeToggle" onclick="toggleDiaryMode()">🌙</button>
     <div id="diaryInputForm">
@@ -566,17 +579,21 @@
       </div>
     </div>
     <div id="diaryGridView" class="diary-grid-view">
+      <!-- زر العودة في أعلى الصفحة -->
       <button onclick="backToDiaryInput()" class="back-to-input">←</button>
-      <!-- هنا تم إزالة زر البحث واستُبدِل بخانة بحث أكبر تحتوي على أيقونة -->
+      <!-- خانة البحث مع زر البحث -->
       <div class="search-bar">
         <input type="text" id="diarySearchInput" placeholder="ابحث في اليوميات" oninput="searchDiary()">
+        <button id="searchButton">
+          <img src="https://cdn-icons-png.flaticon.com/512/49/49116.png" alt="بحث">
+        </button>
       </div>
       <div id="diaryGrid" class="diary-grid">
         <!-- ستظهر بطاقات اليوميات هنا -->
       </div>
     </div>
   </div>
-  <!-- باقي النوافذ المنبثقة (Modals) تبقى كما هي -->
+  <!-- النوافذ المنبثقة (Modals) -->
   <div id="diaryModal" class="modal">
     <div class="modal-content">
       <div class="header">
@@ -692,13 +709,23 @@
   </div>
   <div id="messageBox"></div>
   <script>
+    // دوال التشفير البسيطة (لأغراض العرض فقط)
+    function encrypt(text) {
+      return btoa(text);
+    }
+    function decrypt(text) {
+      return atob(text);
+    }
+
     (function() {
       localStorage.removeItem('accounts');
       localStorage.removeItem('currentAccount');
       console.log("تم إزالة كافة بيانات الحساب المسجل");
     })();
+
     let currentInput = "";
     const display = document.getElementById('display');
+
     function deleteDigit() {
       currentInput = currentInput.slice(0, -1);
       display.value = currentInput;
@@ -732,7 +759,7 @@
       let currentAccount = JSON.parse(localStorage.getItem('currentAccount'));
       let calcPass = "12345678";
       if (currentAccount && currentAccount.calcPassword) {
-        calcPass = currentAccount.calcPassword;
+        calcPass = decrypt(currentAccount.calcPassword);
       }
       if (currentInput === calcPass) {
         document.querySelector('.calculator-container').style.display = 'none';
@@ -752,6 +779,7 @@
         currentInput = "";
       }
     }
+
     let tempAccount = null;
     function openAccountPanel() {
       let currentAccount = JSON.parse(localStorage.getItem('currentAccount'));
@@ -764,7 +792,7 @@
       }
     }
     function updateAccountInfoModalFromTemp() {
-      document.getElementById('accountNameInput').value = tempAccount.name;
+      document.getElementById('accountNameInput').value = decrypt(tempAccount.name);
       document.getElementById('accountProfileImage').src = (tempAccount.image && tempAccount.image.trim() !== "")
         ? tempAccount.image 
         : "https://cdn-icons-png.flaticon.com/512/847/847969.png";
@@ -772,6 +800,16 @@
     function createAccount() {
       const email = document.getElementById('accountEmail').value.trim();
       const password = document.getElementById('accountPassword').value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showMessage("يرجى إدخال بريد إلكتروني صالح", 2000);
+        return;
+      }
+      // التأكد من عدم احتواء البريد على أحرف كبيرة
+      if (email !== email.toLowerCase()) {
+        showMessage("يجب أن يحتوي البريد الإلكتروني على أحرف صغيرة فقط", 2000);
+        return;
+      }
       if (email === "" || password === "") {
         showMessage("الرجاء إدخال البريد الإلكتروني وكلمة المرور", 2000);
         return;
@@ -785,16 +823,17 @@
         return;
       }
       let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
-      if (accounts.find(acc => acc.email === email)) {
+      if (accounts.find(acc => decrypt(acc.email) === email)) {
         showMessage("البريد الإلكتروني مستخدم بالفعل", 2000);
         return;
       }
+      // عند الحساب الجديد نترك حقل الاسم فارغاً
       const account = { 
-        email, 
-        password, 
-        calcPassword: "12345678", 
-        name: email, 
-        image: "" 
+        email: encrypt(email),
+        password: encrypt(password),
+        calcPassword: encrypt("12345678"),
+        name: encrypt(""),
+        image: ""
       };
       accounts.push(account);
       localStorage.setItem('accounts', JSON.stringify(accounts));
@@ -808,7 +847,7 @@
       const email = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value.trim();
       let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
-      const account = accounts.find(acc => acc.email === email && acc.password === password);
+      const account = accounts.find(acc => decrypt(acc.email) === email && decrypt(acc.password) === password);
       if (account) {
         localStorage.setItem('currentAccount', JSON.stringify(account));
         closeLoginModal();
@@ -827,7 +866,7 @@
     }
     function saveAccountChanges(account) {
       let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
-      accounts = accounts.map(acc => acc.email === account.email ? account : acc);
+      accounts = accounts.map(acc => decrypt(acc.email) === decrypt(account.email) ? account : acc);
       localStorage.setItem('accounts', JSON.stringify(accounts));
       localStorage.setItem('currentAccount', JSON.stringify(account));
       showMessage("تم تحديث الحساب", 2000);
@@ -836,7 +875,7 @@
     function saveAccountInfoChanges() {
       let currentAccount = JSON.parse(localStorage.getItem('currentAccount'));
       if (currentAccount) {
-        currentAccount.name = document.getElementById('accountNameInput').value.trim();
+        currentAccount.name = encrypt(document.getElementById('accountNameInput').value.trim());
         currentAccount.image = document.getElementById('accountProfileImage').src;
         saveAccountChanges(currentAccount);
         tempAccount = null;
@@ -846,7 +885,7 @@
     function updateAccountInfoModal() {
       let currentAccount = JSON.parse(localStorage.getItem('currentAccount'));
       if (currentAccount) {
-        document.getElementById('accountNameInput').value = currentAccount.name === currentAccount.email ? "" : currentAccount.name;
+        document.getElementById('accountNameInput').value = decrypt(currentAccount.name) === decrypt(currentAccount.email) ? "" : decrypt(currentAccount.name);
         document.getElementById('accountProfileImage').src = (currentAccount.image && currentAccount.image.trim() !== "")
           ? currentAccount.image 
           : "https://cdn-icons-png.flaticon.com/512/847/847969.png";
@@ -896,7 +935,7 @@
     function loadDiaryEntries() {
       let currentAccount = JSON.parse(localStorage.getItem('currentAccount'));
       if (currentAccount) {
-        diaryEntries = JSON.parse(localStorage.getItem('diaryEntries_' + currentAccount.email)) || [];
+        diaryEntries = JSON.parse(localStorage.getItem('diaryEntries_' + decrypt(currentAccount.email))) || [];
       } else {
         diaryEntries = JSON.parse(localStorage.getItem('diaryEntries_global')) || [];
       }
@@ -911,7 +950,7 @@
         diaryEntries.push({ dateTime, title, text });
         let currentAccount = JSON.parse(localStorage.getItem('currentAccount'));
         if (currentAccount) {
-          localStorage.setItem('diaryEntries_' + currentAccount.email, JSON.stringify(diaryEntries));
+          localStorage.setItem('diaryEntries_' + decrypt(currentAccount.email), JSON.stringify(diaryEntries));
         } else {
           localStorage.setItem('diaryEntries_global', JSON.stringify(diaryEntries));
         }
@@ -924,6 +963,7 @@
     function updateDiaryCount() {
       document.getElementById('diaryCount').innerText = diaryEntries.length;
     }
+    // ترتيب عرض بطاقة اليومية: التاريخ والوقت في الأعلى، خط فاصل، ثم العنوان في الأسفل
     function renderDiaryGrid(entries) {
       const grid = document.getElementById('diaryGrid');
       grid.innerHTML = "";
@@ -932,10 +972,15 @@
         const card = document.createElement('div');
         card.className = "diary-card";
         card.setAttribute("data-index", originalIndex);
-        const dateDiv = document.createElement('div');
-        dateDiv.className = "diary-date";
-        dateDiv.innerText = entry.dateTime;
-        card.appendChild(dateDiv);
+        // التاريخ والوقت في الأعلى
+        const datetimeDiv = document.createElement('div');
+        datetimeDiv.className = "diary-datetime";
+        datetimeDiv.innerText = entry.dateTime;
+        card.appendChild(datetimeDiv);
+        // خط فاصل
+        const hr = document.createElement('hr');
+        card.appendChild(hr);
+        // العنوان في الأسفل
         const titleDiv = document.createElement('div');
         titleDiv.className = "diary-title";
         titleDiv.innerText = (entry.title && entry.title.trim() !== "") ? entry.title : "بدون عنوان";
@@ -948,7 +993,7 @@
     }
     function showDiaryGridView() {
       document.getElementById('diaryInputForm').style.display = 'none';
-      document.getElementById('diaryGridView').style.display = 'block';
+      document.getElementById('diaryGridView').style.display = 'flex';
       renderDiaryGrid(diaryEntries);
     }
     function backToDiaryInput() {
@@ -1008,13 +1053,13 @@
     function confirmDeleteWithPassword() {
       const password = document.getElementById('deletePasswordInput').value.trim();
       const currentAccount = JSON.parse(localStorage.getItem('currentAccount'));
-      if (currentAccount && password !== currentAccount.password) {
+      if (currentAccount && decrypt(currentAccount.password) !== password) {
         showMessage("كلمة السر غير صحيحة", 2000);
         return;
       }
       diaryEntries.splice(currentDiaryIndex, 1);
       if (currentAccount) {
-        localStorage.setItem('diaryEntries_' + currentAccount.email, JSON.stringify(diaryEntries));
+        localStorage.setItem('diaryEntries_' + decrypt(currentAccount.email), JSON.stringify(diaryEntries));
       } else {
         localStorage.setItem('diaryEntries_global', JSON.stringify(diaryEntries));
       }
@@ -1092,7 +1137,7 @@
         return;
       }
       if (selectedPasswordOption === 'account') {
-        if (oldPass !== currentAccount.password) {
+        if (decrypt(currentAccount.password) !== oldPass) {
           showMessage("كلمة السر الحالية غير صحيحة", 2000);
           return;
         }
@@ -1100,9 +1145,9 @@
           showMessage("كلمة السر الجديدة وتأكيدها غير متطابقين", 2000);
           return;
         }
-        currentAccount.password = newPass;
+        currentAccount.password = encrypt(newPass);
       } else if (selectedPasswordOption === 'calc') {
-        const currentCalcPass = currentAccount.calcPassword || "12345678";
+        const currentCalcPass = decrypt(currentAccount.calcPassword) || "12345678";
         if (oldPass !== currentCalcPass) {
           showMessage("كلمة السر الحالية غير صحيحة", 2000);
           return;
@@ -1111,7 +1156,7 @@
           showMessage("كلمة السر الجديدة وتأكيدها غير متطابقين", 2000);
           return;
         }
-        currentAccount.calcPassword = newPass;
+        currentAccount.calcPassword = encrypt(newPass);
       } else {
         showMessage("اختر نوع كلمة السر للتغيير", 2000);
         return;
