@@ -33,7 +33,7 @@
     }
     /* ========= آلة حاسبة ========= */
     .calculator-container {
-      display: block; /* تُعرض الآلة الحاسبة عند البداية */
+      display: block;
     }
     .calculator {
       background: #2e3033;
@@ -41,7 +41,6 @@
       display: flex;
       flex-direction: column;
     }
-    /* تكبير خانة العرض في الآلة الحاسبة */
     .display {
       background: #000;
       color: #0f0;
@@ -68,13 +67,10 @@
       background: #4e5052;
       color: #fff;
       transition: background 0.2s, transform 0.1s;
-      /* لضمان ظهور علامات العمليات من اليمين */
-      direction: ltr;
     }
     .buttons button:hover {
       background: #5a5d60;
     }
-    /* تأثير الضغط يبقى على أزرار الآلة الحاسبة فقط */
     .calculator .buttons button:active {
       transform: scale(0.95);
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
@@ -84,8 +80,8 @@
     .modal button:active,
     .account-info button:active,
     #diaryInputForm .diary-buttons button:active {
-       transform: none;
-       box-shadow: none;
+      transform: none;
+      box-shadow: none;
     }
     .btn.operator { background: #5563de; }
     .btn.operator:hover { background: #4958c9; }
@@ -98,7 +94,6 @@
     }
     .btn.equals:hover { background: #00796b; }
     /* ========= اليوميات ========= */
-    /* يُخفي قسم اليوميات عند البداية */
     .diary-container {
       display: none;
       position: fixed;
@@ -111,12 +106,6 @@
       color: #fff;
       transition: background 0.3s, color 0.3s;
       flex-direction: column;
-      /* إخفاء شريط التمرير (للأجهزة التي تظهره على الجهة اليسرى) */
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-    .diary-container::-webkit-scrollbar {
-      display: none;
     }
     #diaryModeToggle {
       display: block;
@@ -144,7 +133,6 @@
       display: flex;
       flex-direction: column;
     }
-    /* عنوان اليوميات */
     #diaryInputForm h2 {
       text-align: center;
       margin-bottom: 15px;
@@ -163,7 +151,6 @@
       font-size: 1rem;
       transition: background 0.3s, color 0.3s;
     }
-    /* تنسيق الـ placeholder */
     #diaryTitle::placeholder,
     #diaryText::placeholder {
       color: #ccc;
@@ -195,7 +182,7 @@
       background-color: #0073a5;
       transform: scale(1.05);
     }
-    /* ========= تصميم صفحة مشاهدة اليوميات ========= */
+    /* ========= عرض اليوميات ========= */
     .diary-grid-view {
       display: none;
       flex-direction: column;
@@ -205,13 +192,7 @@
       overflow-y: auto;
       transition: background 0.3s, color 0.3s;
       position: relative;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
     }
-    .diary-grid-view::-webkit-scrollbar {
-      display: none;
-    }
-    /* زر العودة (السهم) في أعلى الصفحة: إزالة الإطار والخلفية */
     .back-to-input {
       position: absolute;
       top: 5px;
@@ -226,10 +207,8 @@
       outline: none;
       -webkit-appearance: none;
       -moz-appearance: none;
-      /* اللون ثابت أسود في جميع الأوضاع */
-      color: black !important;
+      color: white;
     }
-    /* لضمان وجود فجوة 1 سم بين زر السهم وخانة البحث */
     .search-bar {
       display: flex;
       align-items: center;
@@ -248,8 +227,6 @@
     .search-bar input:focus {
       border-color: #008cba;
     }
-    /* تمت إزالة أي أيقونة للبحث، تبقى خانة الإدخال فقط */
-    /* تصميم بطاقة اليومية: التاريخ والوقت في الأعلى، خط فاصل، ثم العنوان في الأسفل */
     .diary-card {
       background: #fff;
       border: 1px solid #ccc;
@@ -279,7 +256,6 @@
       font-weight: bold;
       color: #333;
     }
-    /* في الوضع الليلي يظهر عنوان اليومية باللون الأخضر */
     .diary-dark-mode .diary-card .diary-title {
       color: #0f0 !important;
     }
@@ -357,10 +333,14 @@
       border: none;
       cursor: pointer;
     }
+    /* ========= قسم إدارة الحساب ========= */
     .account-info {
       max-width: 400px;
       width: 90%;
       text-align: center;
+      overflow: hidden;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
     .account-info .account-profile {
       margin-bottom: 10px;
@@ -373,24 +353,6 @@
       object-fit: cover;
       margin: 0 auto;
       border: 2px solid #555;
-    }
-    /* إزالة "الشريط" (ScrollBar أو أي حد جانبي) من صفحة الحساب واليوميات */
-    .account-info, .diary-container {
-      border-left: none;
-    }
-    /* إخفاء شريط التمرير (Scrollbar) في الحاويات */
-    .diary-container::-webkit-scrollbar,
-    .diary-grid-view::-webkit-scrollbar,
-    .account-info::-webkit-scrollbar {
-      display: none;
-    }
-    .diary-container {
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-    .account-info {
-      scrollbar-width: none;
-      -ms-overflow-style: none;
     }
     #imageOptions {
       position: fixed;
@@ -444,6 +406,7 @@
     .account-info button:hover {
       background: #0073a5;
     }
+    /* بعض الأكواد الإضافية */
     #saveAccountInfoBtn { background: #4caf50; }
     #accountImageInput { display: none; }
     .password-fields { display: none; }
@@ -525,7 +488,8 @@
       border: 1px solid #0f0;
     }
     .diary-dark-mode .diary-buttons button,
-    .diary-dark-mode .diary-card {
+    .diary-dark-mode .diary-card,
+    .diary-dark-mode .back-to-input {
       background: #111 !important;
       color: #0f0 !important;
       border: 1px solid #0f0 !important;
@@ -541,9 +505,15 @@
       color: #0f0 !important;
       border: 1px solid #0f0 !important;
     }
-    /* التأكيد على بقاء لون سهم العودة أسود في جميع الأوضاع */
-    .back-to-input {
-      color: black !important;
+    .diary-dark-mode .back-to-input {
+      background: none !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    .diary-dark-mode .small-delete-btn img { filter: invert(1); }
+    .diary-dark-mode .account-info button {
+      background: #004d00 !important;
+      color: #0f0 !important;
     }
     /* أكواد إضافية */
     #accountActionsModal .modal-content h2 { margin-bottom: 0.5cm; }
@@ -551,6 +521,11 @@
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.8); }
       to { opacity: 1; transform: scale(1); }
+    }
+    .diary-grid-view::-webkit-scrollbar,
+    .modal-content::-webkit-scrollbar,
+    .account-info::-webkit-scrollbar {
+      display: none;
     }
     @media (max-width: 600px) {
       .display { font-size: 1.5rem; padding: 15px; }
@@ -560,7 +535,7 @@
   </style>
 </head>
 <body>
-  <!-- آلة حاسبة (تظهر عند البداية) -->
+  <!-- آلة حاسبة -->
   <div class="app-container calculator-container">
     <div class="calculator">
       <input type="text" id="display" class="display" readonly>
@@ -586,7 +561,8 @@
       </div>
     </div>
   </div>
-  <!-- اليوميات (تظهر بعد إدخال كلمة السر الصحيحة) -->
+  
+  <!-- اليوميات -->
   <div class="app-container diary-container">
     <button id="diaryModeToggle" onclick="toggleDiaryMode()">🌙</button>
     <div id="diaryInputForm">
@@ -601,17 +577,16 @@
       </div>
     </div>
     <div id="diaryGridView" class="diary-grid-view">
-      <!-- زر العودة في أعلى الصفحة -->
       <button onclick="backToDiaryInput()" class="back-to-input">←</button>
-      <!-- خانة البحث بدون أي أيقونة -->
       <div class="search-bar">
         <input type="text" id="diarySearchInput" placeholder="ابحث في اليوميات" oninput="searchDiary()">
       </div>
       <div id="diaryGrid" class="diary-grid">
-        <!-- ستظهر بطاقات اليوميات هنا -->
+        <!-- بطاقات اليوميات تظهر هنا -->
       </div>
     </div>
   </div>
+  
   <!-- النوافذ المنبثقة (Modals) -->
   <div id="diaryModal" class="modal">
     <div class="modal-content">
@@ -685,9 +660,11 @@
         <p>عدد اليوميات: <span id="diaryCount">0</span></p>
       </div>
       <div class="account-details">
+        <!-- لا توجد قيود على الاسم؛ يمكن كتابة أي اسم -->
         <input type="text" id="accountNameInput" placeholder="اسم الحساب">
       </div>
       <button onclick="openChangePasswordModal()">تغيير كلمة السر</button>
+      <!-- زر حفظ التغييرات في الاسم والصورة -->
       <button id="saveAccountInfoBtn" onclick="saveAccountInfoChanges();">حفظ التغييرات</button>
       <button onclick="openLogoutConfirmModal()">تسجيل الخروج</button>
       <input type="file" id="accountImageInput" accept="image/*" onchange="changeProfileImage(event)">
@@ -727,20 +704,20 @@
     </div>
   </div>
   <div id="messageBox"></div>
+  
   <script>
-    // دوال التشفير البسيطة (لأغراض العرض فقط)
+    /* دوال التشفير لدعم الأحرف العربية */
     function encrypt(text) {
-      return btoa(text);
+      return btoa(encodeURIComponent(text));
     }
     function decrypt(text) {
-      return atob(text);
+      return decodeURIComponent(atob(text));
     }
-
-    // لن يتم تسجيل الخروج تلقائيًا؛ يبقى المستخدم مسجلاً حتى يطلب تسجيل الخروج
-
+    
+    /* ---------- دوال الآلة الحاسبة ---------- */
     let currentInput = "";
     const display = document.getElementById('display');
-
+    
     function deleteDigit() {
       currentInput = currentInput.slice(0, -1);
       display.value = currentInput;
@@ -794,22 +771,24 @@
         currentInput = "";
       }
     }
-
-    let tempAccount = null;
+    
+    /* ---------- دوال إدارة الحساب ---------- */
+    let originalAccount = null;
+    
     function openAccountPanel() {
       let currentAccount = JSON.parse(localStorage.getItem('currentAccount'));
       if (currentAccount) {
-        tempAccount = JSON.parse(JSON.stringify(currentAccount));
-        updateAccountInfoModalFromTemp();
+        originalAccount = JSON.parse(JSON.stringify(currentAccount));
+        updateAccountInfoModalFromOriginal();
         document.getElementById('accountInfoModal').style.display = 'flex';
       } else {
         document.getElementById('accountActionsModal').style.display = 'flex';
       }
     }
-    function updateAccountInfoModalFromTemp() {
-      document.getElementById('accountNameInput').value = decrypt(tempAccount.name);
-      document.getElementById('accountProfileImage').src = (tempAccount.image && tempAccount.image.trim() !== "")
-        ? tempAccount.image 
+    function updateAccountInfoModalFromOriginal() {
+      document.getElementById('accountNameInput').value = decrypt(originalAccount.name);
+      document.getElementById('accountProfileImage').src = (originalAccount.image && originalAccount.image.trim() !== "")
+        ? originalAccount.image 
         : "https://cdn-icons-png.flaticon.com/512/847/847969.png";
     }
     function createAccount() {
@@ -841,7 +820,6 @@
         showMessage("البريد الإلكتروني مستخدم بالفعل", 2000);
         return;
       }
-      // عند الحساب الجديد نترك حقل الاسم فارغاً
       const account = { 
         email: encrypt(email),
         password: encrypt(password),
@@ -883,23 +861,27 @@
       accounts = accounts.map(acc => decrypt(acc.email) === decrypt(account.email) ? account : acc);
       localStorage.setItem('accounts', JSON.stringify(accounts));
       localStorage.setItem('currentAccount', JSON.stringify(account));
-      showMessage("تم تحديث الحساب", 2000);
-      updateAccountInfoModal();
     }
+    // هنا تم إزالة شرط المقارنة؛ يتم حفظ الاسم والصورة مهما كانت التغييرات
     function saveAccountInfoChanges() {
       let currentAccount = JSON.parse(localStorage.getItem('currentAccount'));
       if (currentAccount) {
-        currentAccount.name = encrypt(document.getElementById('accountNameInput').value.trim());
-        currentAccount.image = document.getElementById('accountProfileImage').src;
+        const newName = document.getElementById('accountNameInput').value.trim();
+        const newImageRaw = document.getElementById('accountProfileImage').src;
+        const defaultImage = "https://cdn-icons-png.flaticon.com/512/847/847969.png";
+        const newImage = (newImageRaw === defaultImage) ? "" : newImageRaw;
+        currentAccount.name = encrypt(newName);
+        currentAccount.image = newImage;
         saveAccountChanges(currentAccount);
-        tempAccount = null;
+        // إعادة تحميل البيانات من التخزين المحلي
         updateAccountInfoModal();
+        showMessage("تم حفظ التغيرات", 2000);
       }
     }
     function updateAccountInfoModal() {
       let currentAccount = JSON.parse(localStorage.getItem('currentAccount'));
       if (currentAccount) {
-        document.getElementById('accountNameInput').value = decrypt(currentAccount.name) === decrypt(currentAccount.email) ? "" : decrypt(currentAccount.name);
+        document.getElementById('accountNameInput').value = decrypt(currentAccount.name);
         document.getElementById('accountProfileImage').src = (currentAccount.image && currentAccount.image.trim() !== "")
           ? currentAccount.image 
           : "https://cdn-icons-png.flaticon.com/512/847/847969.png";
@@ -911,9 +893,8 @@
       if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-          tempAccount.image = e.target.result;
           document.getElementById('accountProfileImage').src = e.target.result;
-          showMessage("تم تغيير الصورة", 2000);
+          showMessage("تم تغيير الصورة مؤقتاً", 2000);
         }
         reader.readAsDataURL(file);
       }
@@ -927,15 +908,13 @@
       document.getElementById('imageOptions').style.display = "none";
     }
     function deleteProfileImage() {
-      if (tempAccount) {
-        if (!tempAccount.image || tempAccount.image.trim() === "") {
-          showMessage("لا توجد صورة لحذفها", 2000);
-          document.getElementById('imageOptions').style.display = "none";
-          return;
-        }
-        tempAccount.image = "";
-        document.getElementById('accountProfileImage').src = "https://cdn-icons-png.flaticon.com/512/847/847969.png";
-        showMessage("تم حذف الصورة", 2000);
+      const currentSrc = document.getElementById('accountProfileImage').src;
+      const defaultImage = "https://cdn-icons-png.flaticon.com/512/847/847969.png";
+      if (currentSrc === defaultImage) {
+        showMessage("لا توجد صورة لحذفها", 2000);
+      } else {
+        document.getElementById('accountProfileImage').src = defaultImage;
+        showMessage("تم حذف الصورة مؤقتاً", 2000);
       }
       document.getElementById('imageOptions').style.display = "none";
     }
@@ -944,6 +923,8 @@
         this.style.display = "none";
       }
     });
+    
+    /* ---------- دوال إدارة اليوميات ---------- */
     let diaryEntries = [];
     let currentDiaryIndex = null;
     function loadDiaryEntries() {
@@ -977,7 +958,6 @@
     function updateDiaryCount() {
       document.getElementById('diaryCount').innerText = diaryEntries.length;
     }
-    // ترتيب عرض بطاقة اليومية: التاريخ والوقت في الأعلى، خط فاصل، ثم العنوان في الأسفل
     function renderDiaryGrid(entries) {
       const grid = document.getElementById('diaryGrid');
       grid.innerHTML = "";
@@ -986,15 +966,12 @@
         const card = document.createElement('div');
         card.className = "diary-card";
         card.setAttribute("data-index", originalIndex);
-        // التاريخ والوقت في الأعلى
         const datetimeDiv = document.createElement('div');
         datetimeDiv.className = "diary-datetime";
         datetimeDiv.innerText = entry.dateTime;
         card.appendChild(datetimeDiv);
-        // خط فاصل
         const hr = document.createElement('hr');
         card.appendChild(hr);
-        // العنوان في الأسفل
         const titleDiv = document.createElement('div');
         titleDiv.className = "diary-title";
         titleDiv.innerText = (entry.title && entry.title.trim() !== "") ? entry.title : "بدون عنوان";
@@ -1094,6 +1071,8 @@
         messageBox.style.display = 'none';
       }, duration);
     }
+    
+    /* ---------- دوال النوافذ المنبثقة ---------- */
     function closeAccountActionsModal() {
       document.getElementById('accountActionsModal').style.display = 'none';
     }
