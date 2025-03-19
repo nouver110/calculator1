@@ -140,12 +140,19 @@
       position: absolute;
       top: 10px;
       right: 10px;
+      width: 30px;      /* تحديد العرض حسب حجم الأيقونة */
+      height: 30px;     /* تحديد الارتفاع حسب حجم الأيقونة */
+      padding: 0;
+      margin: 0;
       font-size: 1.8rem;
       background: none;
       border: none;
       cursor: pointer;
       color: inherit;
       z-index: 1100;
+      display: inline-block;
+      text-align: center;
+      line-height: 30px; /* لضمان تمركز الأيقونة عمودياً */
     }
     /* قائمة اللغة المنسدلة بتصميم أنيق */
     .lang-dropdown {
@@ -169,7 +176,6 @@
     .lang-dropdown .lang-item:hover {
       background: #3b3e46;
     }
-    /* تعديل هنا: تغيير عرض زر العودة إلى الآلة الحاسبة */
     #diaryInputForm .back-to-calculator {
       display: block;
       margin-bottom: 10px;
@@ -179,7 +185,7 @@
       color: inherit;
       cursor: pointer;
       text-align: left;
-      width: auto;
+      width: 100%;
     }
     #diaryInputForm {
       margin-top: 20px;
